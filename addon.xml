@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="metadata.fanedit.ifdb"
+       name="IFDB"
+       version="1.0.0"
+       provider-name="TomFin46">
+  <requires>
+    <import addon="xbmc.metadata" version="1.0"/>
+  </requires>
+  <extension point="xbmc.metadata.scraper.movies"
+             language="en"
+             library="ifdb.xml"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Internet Fanedit Database Scraper</summary>
+    <description lang="en">Movie Information add-on for scraping information from the Internet Fanedit Database (IFDB).<br/>
+	Filename titles/search queries must be able to be found with the IFDB search  </description>
+    <platform>all</platform>
+  </extension>
+</addon>
