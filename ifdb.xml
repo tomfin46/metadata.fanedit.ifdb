@@ -2,7 +2,7 @@
 <scraper framework="1.1" date="2015-01-30" content="movies">
 
   <CreateSearchUrl clearbuffers="no" dest="3">
-    <RegExp input="$$1" output="&lt;url&gt;http://www.fanedit.org/ifdb/jreviews/search-results?keywords=\1&lt;/url&gt;" dest="3">
+    <RegExp input="$$1" output="&lt;url&gt;http://ifdb.fanedit.org/fanedit-search/search-results/?query=all&scope=title&keywords=\1&order=alpha&lt;/url&gt;" dest="3">
       <expression noclean="1" />
     </RegExp>
   </CreateSearchUrl>
@@ -15,25 +15,25 @@
 
   <GetSearchResults dest="8">
     <RegExp input="$$5" output="&lt;results&gt;\1&lt;/results&gt;" dest="8">
-      
+
       <!--Normal Search-->
-      <RegExp input="$$1" output="&lt;entity&gt;&lt;title&gt;\2&lt;/title&gt;&lt;url&gt;http:\/\/www.fanedit.org/ifdb/component/content/article/\1&lt;/url&gt;&lt;/entity&gt;" dest="5">
+      <RegExp input="$$1" output="&lt;entity&gt;&lt;title&gt;\2&lt;/title&gt;&lt;url&gt;http:\/\/ifdb.fanedit.org/?p=\1&lt;/url&gt;&lt;/entity&gt;" dest="5">
         <expression noclean="1" repeat="yes" >id=&quot;jr-listing-title-([0-9]*)&quot;[\s]*&gt;(.[^&lt;]*)&lt;/a&gt;</expression>
       </RegExp>
 
       <!--For if we get a direct match and redirected straight to movie page-->
       <RegExp input="$$3" output="&lt;entity&gt;\1&lt;/entity&gt;" dest="5+">
-        
+
         <!--Fanedit Id-->
-        <RegExp input="$$1" output="&lt;url&gt;http:\/\/www.fanedit.org/ifdb/component/content/article/\1&lt;/url&gt;" dest="3">
+        <RegExp input="$$1" output="&lt;url&gt;http:\/\/ifdb.fanedit.org/?p=\1&lt;/url&gt;" dest="3">
           <expression noclean="1">data-listing-id="([0-9]*)"</expression>
         </RegExp>
-        
+
         <!--Title-->
         <RegExp input="$$1" output="&lt;title&gt;\1&lt;/title&gt;" dest="3+">
           <expression noclean="1">&lt;span itemprop=&quot;name&quot;&gt;(.*)&lt;/span&gt;</expression>
         </RegExp>
-        
+
         <expression noclean="1" />
       </RegExp>
 
@@ -48,18 +48,18 @@
       <RegExp input="$$1" output="&lt;plot&gt;\1&lt;/plot&gt;" dest="2">
         <expression fixchars="1" trim="1">&lt;div class=&quot;jrFieldRow jrBriefsynopsis&quot;&gt;&lt;div class=&quot;jrFieldLabel&quot;&gt;Brief Synopsis:&lt;/div&gt;&lt;div class=&quot;jrFieldValue &quot;&gt;(.*)&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;jrFieldRow jrIntention</expression>
       </RegExp>
-      
+
       <!--Genres-->
       <RegExp input="$$5" output="&lt;genre&gt;\1&lt;/genre&gt;" dest="2+">
         <RegExp input="$$1" output="\1" dest="5">
           <expression noclean="1">&lt;div class=&quot;jrFieldRow jrGenre&quot;&gt;&lt;div class=&quot;jrFieldLabel&quot;&gt;Genre:&lt;/div&gt;&lt;div class=&quot;jrFieldValue &quot;&gt;&lt;ul class=&quot;jrFieldValueList&quot;&gt;(.*)&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;</expression>
         </RegExp>
-        <expression noclean="1" repeat="yes">&lt;li&gt;&lt;a href=&quot;http:\/\/[www.]*fanedit.org/ifdb/jreviews/tag/genre/[a-zA-Z\-]*&quot;&gt;([a-zA-Z\s]*)&lt;/a&gt;&lt;/li&gt;</expression>
+        <expression noclean="1" repeat="yes">&lt;li&gt;&lt;a href=&quot;http://ifdb.fanedit.org/fanedit-search/tag/genre/[a-zA-Z\-]*/\?criteria=[0-9]*&quot;&gt;([a-zA-Z\s]*)&lt;/a&gt;&lt;/li&gt;</expression>
       </RegExp>
 
       <!--Genre-->
       <RegExp input="$$1" output="&lt;genre&gt;\1&lt;/genre&gt;" dest="2+">
-        <expression noclean="1">&lt;div class=&quot;jrFieldRow jrGenre&quot;&gt;&lt;div class=&quot;jrFieldLabel&quot;&gt;Genre:&lt;/div&gt;&lt;div class=&quot;jrFieldValue &quot;&gt;&lt;a href=&quot;http:\/\/[www.]*fanedit.org/ifdb/jreviews/tag/genre/[a-zA-Z\-]*&quot;>([a-zA-Z\s]*)&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;</expression>
+        <expression noclean="1">&lt;div class=&quot;jrFieldRow jrGenre&quot;&gt;&lt;div class=&quot;jrFieldLabel&quot;&gt;Genre:&lt;/div&gt;&lt;div class=&quot;jrFieldValue &quot;&gt;&lt;a href=&quot;http://ifdb.fanedit.org/fanedit-search/tag/genre/[a-zA-Z\-]*/\?criteria=[0-9]*&quot;>([a-zA-Z\s]*)&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;</expression>
       </RegExp>
 
       <!--Votes-->
@@ -81,18 +81,18 @@
       <RegExp input="$$1" output="&lt;tagline&gt;\1&lt;/tagline&gt;" dest="2+">
         <expression fixchars="1" trim="1">&lt;div class=&quot;jrFieldRow jrTagline&quot;&gt;&lt;div class=&quot;jrFieldLabel&quot;&gt;Tagline:&lt;/div&gt;&lt;div class=&quot;jrFieldValue &quot;&gt;(.*)&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;jrFieldRow jrOriginalmovietitle</expression>
       </RegExp>
-      
+
       <!--Directors-->
       <RegExp input="$$5" output="&lt;director&gt;\1&lt;/director&gt;" dest="2+">
         <RegExp input="$$1" output="\1" dest="5">
           <expression noclean="1">&lt;div class=&quot;jrFieldRow jrFaneditorname&quot;&gt;&lt;div class=&quot;jrFieldLabel&quot;&gt;Faneditor Name:&lt;/div&gt;&lt;div class=&quot;jrFieldValue &quot;&gt;&lt;ul class=&quot;jrFieldValueList&quot;&gt;(.*)&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;</expression>
         </RegExp>
-        <expression noclean="1" repeat="yes">&lt;li&gt;&lt;a href=&quot;http:\/\/[www.]*fanedit.org/ifdb/jreviews/tag/faneditorname/[a-z0-9\-]*&quot;&gt;([a-zA-Z0-9\s\-&apos;]*)&lt;/a&gt;&lt;/li&gt;</expression>
+        <expression noclean="1" repeat="yes">&lt;li&gt;&lt;a href=&quot;http://ifdb.fanedit.org/fanedit-search/tag/faneditorname/[a-z0-9\-]*/\?criteria=[0-9]*&quot;&gt;([a-zA-Z0-9\s\-&apos;]*)&lt;/a&gt;&lt;/li&gt;</expression>
       </RegExp>
 
       <!--Director-->
       <RegExp input="$$1" output="&lt;director&gt;\1&lt;/director&gt;" dest="2+">
-        <expression noclean="1">&lt;div class=&quot;jrFieldRow jrFaneditorname&quot;&gt;&lt;div class=&quot;jrFieldLabel&quot;&gt;Faneditor Name:&lt;/div&gt;&lt;div class=&quot;jrFieldValue &quot;&gt;&lt;a href=&quot;http:\/\/[www.]*fanedit.org/ifdb/jreviews/tag/faneditorname/[a-z0-9\-]*&quot;&gt;([a-zA-Z0-9\s\-&apos;]*)&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;</expression>
+        <expression noclean="1">&lt;div class=&quot;jrFieldRow jrFaneditorname&quot;&gt;&lt;div class=&quot;jrFieldLabel&quot;&gt;Faneditor Name:&lt;/div&gt;&lt;div class=&quot;jrFieldValue &quot;&gt;&lt;a href=&quot;http:\/\/ifdb.fanedit.org/fanedit-search/tag/faneditorname/[a-z0-9\-]*/\?criteria=[0-9]*&quot;&gt;([a-zA-Z0-9\s\-&apos;]*)&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;</expression>
       </RegExp>
 
       <!--Year-->
@@ -102,7 +102,7 @@
 
       <!--Title-->
       <RegExp input="$$1" output="&lt;title&gt;\1&lt;/title&gt;" dest="2+">
-        <expression noclean="1">&lt;span itemprop=&quot;name&quot;&gt;(.*)&lt;/span&gt;</expression>
+        <expression noclean="1">&lt;span itemprop=&quot;headline&quot;&gt;(.*)&lt;/span&gt;</expression>
       </RegExp>
 
       <expression noclean="1" />
