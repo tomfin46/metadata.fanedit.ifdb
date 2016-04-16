@@ -18,7 +18,7 @@
 
       <!--Normal Search-->
       <RegExp input="$$1" output="&lt;entity&gt;&lt;title&gt;\2&lt;/title&gt;&lt;url&gt;http:\/\/ifdb.fanedit.org/?p=\1&lt;/url&gt;&lt;/entity&gt;" dest="5">
-        <expression noclean="1" repeat="yes" >id=&quot;jr-listing-title-([0-9]*)&quot;[\s]*&gt;(.[^&lt;]*)&lt;/a&gt;</expression>
+        <expression noclean="1" repeat="yes" >id=&quot;jr-listing-title-([0-9]*)&quot;[\s]*&gt;(.[^&lt;]*)&lt;\/a&gt;</expression>
       </RegExp>
 
       <!--For if we get a direct match and redirected straight to movie page-->
@@ -26,12 +26,12 @@
 
         <!--Fanedit Id-->
         <RegExp input="$$1" output="&lt;url&gt;http:\/\/ifdb.fanedit.org/?p=\1&lt;/url&gt;" dest="3">
-          <expression noclean="1">data-listing-id="([0-9]*)"</expression>
+          <expression noclean="1">data-listingid=&quot;listing(\d+)&quot;</expression>
         </RegExp>
 
         <!--Title-->
         <RegExp input="$$1" output="&lt;title&gt;\1&lt;/title&gt;" dest="3+">
-          <expression noclean="1">&lt;span itemprop=&quot;name&quot;&gt;(.*)&lt;/span&gt;</expression>
+          <expression noclean="1">&lt;span itemprop=&quot;headline&quot;&gt;(.*)&lt;/span&gt;</expression>
         </RegExp>
 
         <expression noclean="1" />
@@ -63,18 +63,18 @@
       </RegExp>
 
       <!--Votes-->
-      <RegExp input="$$1" output="&lt;votes&gt;\1&lt;/votes&gt;" dest="2+">
-        <expression noclean="1">&lt;span class=&quot;jrReviewCount&quot;&gt; \(&lt;span class=&quot;count&quot;>([0-9]*)&lt;/span&gt;\)&lt;/span&gt;</expression>
+      <RegExp input="$$1" output="&lt;votes&gt;\3&lt;/votes&gt;" dest="2+">
+        <expression noclean="1">(&lt;span class=&quot;jrRatingValue&quot;&gt;[\d.\s]+&lt;span class=&quot;rating_count&quot;&gt;)?(&lt;span class=&quot;jrReviewCount&quot;&gt; )?\(&lt;span class=&quot;count&quot;>([0-9]*)&lt;/span&gt;\)&lt;/span&gt;</expression>
       </RegExp>
 
       <!--Rating-->
-      <RegExp input="$$1" output="&lt;rating&gt;\1&lt;/rating&gt;" dest="2+">
-        <expression noclean="1">&lt;span class=&quot;jrRatingValue&quot;&gt;&lt;span&gt;(.*)&lt;/span&gt;&lt;span</expression>
+      <RegExp input="$$1" output="&lt;rating&gt;\2&lt;/rating&gt;" dest="2+">
+        <expression noclean="1">&lt;span class=&quot;jrRatingValue&quot;&gt;(&lt;span&gt;)?([\d.]+)</expression>
       </RegExp>
 
       <!--Thumbnail-->
       <RegExp input="$$1" output="&lt;thumb&gt;\1&lt;/thumb&gt;" dest="2+">
-        <expression noclean="1">&lt;div[\s]*class=&quot;jrListingMainImage&quot;[\s]*style=&quot;.*&quot;&gt;[\s]*&lt;a href=&quot;.*&quot;[\s]*class=&quot;fancybox&quot;[\s]*rel=&quot;gallery&quot;[\s]*title=&quot;.*&quot;[\s]*&gt;&lt;img src=&quot;(.*)&quot;[\s]*alt=&quot;.*&quot;[\s]*title=&quot;.*&quot;[\s]*class=&quot;jrMediaPhoto&quot;[\s]*/&gt;&lt;/a&gt;[\s]*&lt;/div&gt;</expression>
+        <expression noclean="1">&lt;div[\s]*class=&quot;jrListingMainImage&quot;[\s]*style=&quot;.*&quot;&gt;[\s]*&lt;a href=&quot;.*&quot;[\s]*class=&quot;fancybox&quot;[\s]*rel=&quot;gallery&quot;[\s]*title=&quot;.*&quot;[\s]*&gt;&lt;img src=&quot;(.*)&quot;[\s]*alt=&quot;.*&quot;[\s]*title=&quot;.*&quot;[\s]*class=&quot;jrMediaPhoto&quot;[\s]*\/&gt;&lt;\/a&gt;[\s]*&lt;\/div&gt;</expression>
       </RegExp>
 
       <!--Tagline-->
@@ -102,7 +102,7 @@
 
       <!--Title-->
       <RegExp input="$$1" output="&lt;title&gt;\1&lt;/title&gt;" dest="2+">
-        <expression noclean="1">&lt;span itemprop=&quot;headline&quot;&gt;(.*)&lt;/span&gt;</expression>
+        <expression noclean="1">&lt;span itemprop=&quot;headline&quot;&gt;(.*)&lt;\/span&gt;</expression>
       </RegExp>
 
       <expression noclean="1" />
